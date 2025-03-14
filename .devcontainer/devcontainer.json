@@ -1,0 +1,20 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+{
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/var/www/html",
+    "shutdownAction": "stopCompose",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bmewburn.vscode-intelephense-client",
+                "mrmlnc.vscode-apache",
+                "MS-vsliveshare.vsliveshare"
+            ]
+        }
+    },
+    "forwardPorts": [
+        "proxy:80",
+        "db:3306"
+    ]
+}

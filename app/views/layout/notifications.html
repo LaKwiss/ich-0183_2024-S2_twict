@@ -1,0 +1,13 @@
+{% if (count($this.notifications) > 0): %}
+<section id="event-msg" class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% foreach ($this.notifications as $message): %}
+                <div class="alert alert-{{ $message.type }}" role="alert">{{ $message.content }}</div>
+                {% endforeach %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}

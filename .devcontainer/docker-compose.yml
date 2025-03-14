@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      dockerfile: app.Dockerfile
+      context: .
+
+    restart: unless-stopped
+
+    environment:
+      VIRTUAL_HOST: "${APP_VHOST}"
+
+    volumes:
+      - ../:/var/www/html:cached
+
+  db:
+    build:
+      dockerfile: db.Dockerfile
+      context: .
+
+    restart: unless-stopped
+
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../databases:/docker-entrypoint-initdb.d:ro
+
+    ports:
+      - "3306:3306"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+
+  pma:
+    image: phpmyadmin:5.2.1
+
+    restart: unless-stopped
+
+    environment:
+      PMA_HOST: "db"
+      PMA_USER: "root"
+      PMA_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      VIRTUAL_HOST: "${PMA_VHOST}"
+
+    depends_on:
+      - db
+
+  proxy:
+    image: jwilder/nginx-proxy:1.4.0-alpine
+
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+    depends_on:
+      - app
+      - pma
+
+volumes:
+  db-data:
