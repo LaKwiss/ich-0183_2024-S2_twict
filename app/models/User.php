@@ -73,4 +73,20 @@ class User extends Model
 
         return $success;
     }
+
+    public static function findByEmail(string $email): ?array
+    {
+        $db = static::getDB();
+
+        $model = $db
+            ->query(<<< SQL
+            SELECT `id`, `firstname`, `lastname`, `mailAddress`, `password`, `createdAt`, `updatedAt`
+            FROM `users`
+            WHERE `mailAddress` = '{$email}'
+            LIMIT 1;
+        SQL)
+            ->fetch() ?: null;
+
+        return $model;
+    }
 }

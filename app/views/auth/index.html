@@ -1,0 +1,20 @@
+{% extends "layout/base" %}
+
+{% block title %}Authentication{% endblock %}
+
+{% block content %}
+<section id="authentication" class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Authentication Methods</h2>
+                <div class="list-group">
+                    <a href="/authbasic/login" class="list-group-item list-group-item-action">
+                        HTTP Basic Authentication
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
