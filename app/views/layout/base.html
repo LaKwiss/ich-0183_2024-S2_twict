@@ -11,8 +11,21 @@
 
 <body id="#page-top">
 	<nav class="navbar navbar-dark bg-dark" id="mainNav">
-		<div class="container">
+		<div class="container d-flex justify-content-between">
 			<a class="navbar-brand js-scroll-trigger" href="/">Twict</a>
+			<div>
+				{% if isset($this.debug.session.user) %}
+				<span class="navbar-text text-light me-3">
+					Hello, {{ $this.debug.session.user.firstname }}
+					{% if isset($this.debug.session.auth_method) %}
+					({{ $this.debug.session.auth_method }})
+					{% endif %}
+				</span>
+				<a href="/authform/logout" class="btn btn-outline-light btn-sm">Logout</a>
+				{% else %}
+				<a href="/auth/index" class="btn btn-outline-light btn-sm">Login</a>
+				{% endif %}
+			</div>
 		</div>
 	</nav>
 
